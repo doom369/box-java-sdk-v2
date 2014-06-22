@@ -1,15 +1,5 @@
 package com.box.boxjavalibv2.filetransfer;
 
-import java.io.File;
-import java.io.FileOutputStream;
-import java.io.IOException;
-import java.io.InputStream;
-import java.io.OutputStream;
-import java.util.Date;
-
-import org.apache.commons.io.IOUtils;
-import org.apache.commons.lang.StringUtils;
-
 import com.box.boxjavalibv2.IBoxConfig;
 import com.box.boxjavalibv2.dao.BoxServerError;
 import com.box.boxjavalibv2.exceptions.AuthFatalFailureException;
@@ -25,6 +15,10 @@ import com.box.restclientv2.exceptions.BoxRestException;
 import com.box.restclientv2.requestsbase.BoxDefaultRequestObject;
 import com.box.restclientv2.responseparsers.DefaultFileResponseParser;
 import com.box.restclientv2.responses.DefaultBoxResponse;
+import org.apache.commons.io.IOUtils;
+import org.apache.commons.lang.StringUtils;
+
+import java.io.*;
 
 /**
  * Contains logic for downloading a user's file from Box API and supports using {@link IFileTransferListener} to monitor downloading progress.
@@ -219,7 +213,7 @@ public class BoxFileDownload {
                     outputStreams[i].write(buffer, 0, bufferLength);
                 }
                 mBytesTransferred += bufferLength;
-                long currTime = (new Date()).getTime();
+                long currTime = System.currentTimeMillis();
                 if (mListener != null && currTime - lastOnProgressPost > progressUpdateInterval) {
                     lastOnProgressPost = currTime;
                     mListener.onProgress(mBytesTransferred);

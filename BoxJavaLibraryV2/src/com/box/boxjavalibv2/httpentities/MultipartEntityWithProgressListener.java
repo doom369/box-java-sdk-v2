@@ -1,24 +1,22 @@
 package com.box.boxjavalibv2.httpentities;
 
-import java.io.FilterOutputStream;
-import java.io.IOException;
-import java.io.OutputStream;
-import java.io.UnsupportedEncodingException;
-import java.nio.charset.Charset;
-import java.util.Date;
-import java.util.HashMap;
-import java.util.Map;
-
+import com.box.boxjavalibv2.exceptions.BoxJSONException;
+import com.box.boxjavalibv2.filetransfer.IFileTransferListener;
+import com.box.boxjavalibv2.jsonentities.IBoxJSONStringEntity;
+import com.box.boxjavalibv2.jsonparsing.IBoxJSONParser;
 import org.apache.commons.codec.CharEncoding;
 import org.apache.http.entity.mime.HttpMultipartMode;
 import org.apache.http.entity.mime.MultipartEntity;
 import org.apache.http.entity.mime.content.ContentBody;
 import org.apache.http.entity.mime.content.StringBody;
 
-import com.box.boxjavalibv2.exceptions.BoxJSONException;
-import com.box.boxjavalibv2.filetransfer.IFileTransferListener;
-import com.box.boxjavalibv2.jsonentities.IBoxJSONStringEntity;
-import com.box.boxjavalibv2.jsonparsing.IBoxJSONParser;
+import java.io.FilterOutputStream;
+import java.io.IOException;
+import java.io.OutputStream;
+import java.io.UnsupportedEncodingException;
+import java.nio.charset.Charset;
+import java.util.HashMap;
+import java.util.Map;
 
 /**
  * This is a class wrappying MultipartEntity with a IFIleTransferListener so the writing progress of the entity can be monitored.
@@ -156,7 +154,7 @@ public class MultipartEntityWithProgressListener extends MultipartEntity {
                 }
             }
             bytesBransferred += length;
-            long currTime = (new Date()).getTime();
+            long currTime = System.currentTimeMillis();
             if (mProgresslistener != null && currTime - lastOnProgressPost > onProgressUpdateThreshold) {
                 lastOnProgressPost = currTime;
                 mProgresslistener.onProgress(bytesBransferred);
